@@ -95,9 +95,46 @@ class SortingRobot:
     def sort(self):
         """
         Sort the robot's list.
+        1. Define Edges left and right.
+            a. if my hands are empty, pick up an item
+        2. While within the edges of the list
+            a. while moving right
+                i. if i have no item on me and can no longer move right, i am done moving right
+                ii. if i carry an item that is greater/or there is a "None" space, swap item
+            b. while moving left
+                i. if i am carrying None/a list position is None, I will immediately swap items
+            c. exit while loop
+
         """
         # Fill this out
-        pass
+
+        #Edges of right and left of list
+        if self.can_move_right() == False and self.can_move_left() == False:
+            return
+        self.set_light_on()
+
+        # If empty handed, pick up item
+        if self.compare_item() == None:
+            self.swap_item()
+
+        #While Within the edges
+        while self.light_is_on():
+            #Moving Right
+            while self.can_move_right():
+                self.move_right()
+                if self.compare_item() == None and self.can_move_right() == False:
+                    self.set_light_off()
+                    return
+                elif self.compare_item() == 1 or self.compare_item() == None:
+                    self.swap_item()
+            #Moving Left
+            while self.can_move_left():
+                self.move_left()
+                if self.compare_item() == None:
+                    self.swap_item()
+                    break
+
+        self.set_light_off()
 
 
 if __name__ == "__main__":
