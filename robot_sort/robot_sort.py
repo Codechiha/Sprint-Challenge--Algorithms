@@ -14,14 +14,22 @@ class SortingRobot:
         Returns True if the robot can move right or False if it's
         at the end of the list.
         """
-        return self._position < len(self._list) - 1
+        if self._position < len(self._list) - 1:
+            return True
+        return False
+        # Or simply, 
+        # return self._position < len(self._list) - 1
 
     def can_move_left(self):
         """
         Returns True if the robot can move left or False if it's
         at the start of the list.
         """
-        return self._position > 0
+        if self._position > 0:
+            return True
+        return False
+        # Or simply, 
+        # return self._position > 0
 
     def move_right(self):
         """
@@ -57,6 +65,7 @@ class SortingRobot:
         """
         self._time += 1
         # Swap the held item with the list item at the robot's position
+        # Held Item, Item in Position = Item in Position, Held Item
         self._item, self._list[self._position] = self._list[self._position], self._item
 
     def compare_item(self):
@@ -81,11 +90,13 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -120,7 +131,7 @@ class SortingRobot:
         #While Within the edges
         while self.light_is_on():
             #Moving Right
-            while self.can_move_right():
+            while self.can_move_right() == True:
                 self.move_right()
                 if self.compare_item() == None and self.can_move_right() == False:
                     self.set_light_off()
